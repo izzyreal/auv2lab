@@ -1,11 +1,3 @@
-/*
- Copyright (C) 2016 Apple Inc. All Rights Reserved.
- See LICENSE.txt for this sample’s licensing information
- 
- Abstract:
- Instrument AU
- */
-
 #include <AudioUnitSDK/MusicDeviceBase.h>
 #include <Carbon/Carbon.h>
 
@@ -13,6 +5,11 @@ class AUv2Lab : public ausdk::MusicDeviceBase
 {
 public:
     AUv2Lab(AudioUnit inComponentInstance);
+    
+    bool ValidFormat(AudioUnitScope inScope, AudioUnitElement inElement,
+                     const AudioStreamBasicDescription& inNewFormat) override;
+    
+    AudioStreamBasicDescription GetStreamFormat(AudioUnitScope inScope, AudioUnitElement inElement) override;
         
     bool CanScheduleParameters() const override;
     
@@ -35,32 +32,7 @@ public:
     {
         return noErr;
     }
-    
-    UInt32 GetAudioChannelLayout(AudioUnitScope scope,
-                                 AudioUnitElement element,
-                                 AudioChannelLayout* outLayoutPtr,
-                                 bool& outWritable) override
-    {
-        if (scope != kAudioUnitScope_Output) return 0;
-        if (!outLayoutPtr) return sizeof(AudioChannelLayout);
-
-        *outLayoutPtr = {};
-        outLayoutPtr->mChannelLayoutTag = kAudioChannelLayoutTag_Stereo;
-        outLayoutPtr->mChannelBitmap = 0;
-        outLayoutPtr->mNumberChannelDescriptions = 0;
-        outWritable = false;
-
-        return sizeof(AudioChannelLayout);
-    }
-    
-    UInt32 SupportedNumChannels (const AUChannelInfo** outInfo) override
-    {
-        if (outInfo != nullptr)
-            *outInfo = channelInfo.data();
-
-        return (UInt32) channelInfo.size();
-    }
-    
+        
     ComponentResult GetPropertyInfo(AudioUnitPropertyID inID,
                                     AudioUnitScope inScope,
                                     AudioUnitElement inElement,
@@ -95,7 +67,4 @@ public:
 
         return MusicDeviceBase::GetProperty(inID, inScope, inElement, outData);
     }
-    
-private:
-    std::vector<AUChannelInfo> channelInfo {{2,2}};
 };
