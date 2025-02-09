@@ -18,7 +18,10 @@ add_library(AUv2Lab MODULE ${SOURCES})
 set_target_properties(AUv2Lab PROPERTIES
     BUNDLE TRUE
     BUNDLE_EXTENSION "component"
-    XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY ""
+    XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "nl.izmar.AUv2Lab"
+    XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
+    XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
+    XCODE_ATTRIBUTE_DEVELOPMENT_TEAM ""
     XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME "YES"
     XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioUnit -framework CoreAudio -framework AppKit"
     CXX_STANDARD 17
@@ -41,6 +44,8 @@ configure_file(
 )
 
 add_custom_command(TARGET AUv2Lab POST_BUILD
-    COMMAND "/bin/cp" -R "${CMAKE_BINARY_DIR}/$<CONFIG>/AUv2Lab.component" "$ENV{HOME}/Library/Audio/Plug-Ins/Components/"
+    COMMAND /bin/echo -n "BNDL????" > "${CMAKE_BINARY_DIR}/$<CONFIG>/AUv2Lab.component/Contents/PkgInfo"
+    COMMAND /bin/cp -R "${CMAKE_BINARY_DIR}/$<CONFIG>/AUv2Lab.component" "$ENV{HOME}/Library/Audio/Plug-Ins/Components/"
     COMMENT "Deploying AUv2Lab.component to ~/Library/Audio/Plug-Ins/Components"
 )
+
