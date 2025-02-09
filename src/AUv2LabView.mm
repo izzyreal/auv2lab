@@ -1,22 +1,22 @@
 #import <Cocoa/Cocoa.h>
 #import <AudioUnit/AUCocoaUIView.h>
 
-@interface SinSynthView : NSObject <AUCocoaUIBase>
+@interface AUv2LabView : NSObject <AUCocoaUIBase>
 @end
 
-@implementation SinSynthView
+@implementation AUv2LabView
 
 - (unsigned)interfaceVersion {
     return 0;
 }
 
 - (NSView *)uiViewForAudioUnit:(AudioUnit)inAudioUnit withSize:(NSSize)inPreferredSize {
-    NSLog(@"\n\n=================== SinSynthViewFactory::uiViewForAudioUnit called ==================\n\n");
+    NSLog(@"\n\n=================== AUv2LabViewFactory::uiViewForAudioUnit called ==================\n\n");
     return [[NSView alloc] initWithFrame:NSMakeRect(0, 0, inPreferredSize.width, inPreferredSize.height)];
 }
 
 @end
 
-extern "C" void* SinSynth_CreateCocoaView() {
-    return [[SinSynthView alloc] init];
+extern "C" void* AUv2Lab_CreateCocoaView() {
+    return [[AUv2LabView alloc] init];
 }
