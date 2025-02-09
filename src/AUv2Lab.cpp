@@ -75,7 +75,7 @@ AudioStreamBasicDescription AUv2Lab::GetStreamFormat(AudioUnitScope inScope, Aud
 
 bool AUv2Lab::StreamFormatWritable (AudioUnitScope scope, AudioUnitElement element)
 {
-    return false;
+    return true;
 }
 
 bool AUv2Lab::ValidFormat(AudioUnitScope inScope, AudioUnitElement inElement,
