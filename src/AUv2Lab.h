@@ -9,10 +9,10 @@
 #include <AudioUnitSDK/MusicDeviceBase.h>
 #include <Carbon/Carbon.h>
 
-class SinSynth : public ausdk::MusicDeviceBase
+class AUv2Lab : public ausdk::MusicDeviceBase
 {
 public:
-    SinSynth(AudioUnit inComponentInstance);
+    AUv2Lab(AudioUnit inComponentInstance);
         
     bool CanScheduleParameters() const override;
     
@@ -86,10 +86,10 @@ public:
         {
             AudioUnitCocoaViewInfo* info = (AudioUnitCocoaViewInfo*)outData;
 
-            CFBundleRef bundle = CFBundleGetBundleWithIdentifier(CFSTR("nl.izmar.auv2lab"));
+            CFBundleRef bundle = CFBundleGetBundleWithIdentifier(CFSTR("nl.izmar.AUv2Lab"));
 
             info->mCocoaAUViewBundleLocation = CFBundleCopyBundleURL(bundle);
-            info->mCocoaAUViewClass[0] = CFStringCreateWithCString(0, "SinSynthView", kCFStringEncodingUTF8);
+            info->mCocoaAUViewClass[0] = CFStringCreateWithCString(0, "AUv2LabView", kCFStringEncodingUTF8);
             return noErr;
         }
 

@@ -6,48 +6,69 @@
 	<array>
 		<dict>
 			<key>description</key>
-			<string>SinSynth AudioUnit</string>
+			<string>AUv2Lab</string>
 			<key>factoryFunction</key>
-			<string>SinSynthFactory</string>
+			<string>AUv2LabFactory</string>
 			<key>manufacturer</key>
-			<string>Demo</string>
+			<string>Izmr</string>
 			<key>name</key>
-			<string>Apple Sample Code: SinSynth (Instrument AU)</string>
-			<key>sandboxSafe</key>
-			<true/>
+			<string>Izmar: AUv2Lab</string>
+			<key>resourceUsage</key>
+			<dict>
+				<key>network.client</key>
+				<true/>
+				<key>temporary-exception.files.all.read-write</key>
+				<true/>
+			</dict>
 			<key>subtype</key>
-			<string>jsin</string>
-			<key>tags</key>
-			<array>
-				<string>Synthesizer</string>
-			</array>
+			<string>IauL</string>
 			<key>type</key>
 			<string>aumu</string>
 			<key>version</key>
-			<integer>65632</integer>
+			<integer>70001</integer>
 		</dict>
 	</array>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>English</string>
+	<key>BuildMachineOSBuild</key>
+	<string>23H417</string>
+	<key>CFBundleDisplayName</key>
+	<string>AUv2Lab</string>
 	<key>CFBundleExecutable</key>
-	<string>SinSynth</string>
-	<key>CFBundleIconFile</key>
-	<string></string>
+	<string>AUv2Lab</string>
 	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
+	<string>nl.izmar.AUv2Lab</string>
 	<key>CFBundleName</key>
-	<string>SinSynth</string>
+	<string>AUv2Lab</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.1</string>
+	<string>0.2.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>MacOSX</string>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.1</string>
-	<key>CSResourcesFileMapped</key>
+	<string>0.2.0</string>
+	<key>DTCompiler</key>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
+	<key>DTPlatformBuild</key>
+	<string></string>
+	<key>DTPlatformName</key>
+	<string>macosx</string>
+	<key>DTPlatformVersion</key>
+	<string>14.5</string>
+	<key>DTSDKBuild</key>
+	<string>23F73</string>
+	<key>DTSDKName</key>
+	<string>macosx14.5</string>
+	<key>DTXcode</key>
+	<string>1540</string>
+	<key>DTXcodeBuild</key>
+	<string>15F31d</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>14.5</string>
+	<key>NSHighResolutionCapable</key>
 	<true/>
 </dict>
 </plist>
