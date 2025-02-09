@@ -25,7 +25,7 @@
 			<key>type</key>
 			<string>aumu</string>
 			<key>version</key>
-			<integer>512</integer>
+			<integer>70001</integer>
 		</dict>
 	</array>
 	<key>BuildMachineOSBuild</key>

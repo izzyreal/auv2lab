@@ -86,7 +86,7 @@ public:
         {
             AudioUnitCocoaViewInfo* info = (AudioUnitCocoaViewInfo*)outData;
 
-            CFBundleRef bundle = CFBundleGetBundleWithIdentifier(CFSTR("nl.izmar.auv2lab"));
+            CFBundleRef bundle = CFBundleGetBundleWithIdentifier(CFSTR("nl.izmar.AUv2Lab"));
 
             info->mCocoaAUViewBundleLocation = CFBundleCopyBundleURL(bundle);
             info->mCocoaAUViewClass[0] = CFStringCreateWithCString(0, "AUv2LabView", kCFStringEncodingUTF8);
