@@ -21,11 +21,34 @@
 				<true/>
 			</dict>
 			<key>subtype</key>
+			<string>IafL</string>
+			<key>type</key>
+			<string>aumf</string>
+			<key>version</key>
+			<integer>70042</integer>
+		</dict>
+		<dict>
+			<key>description</key>
+			<string>AUv2Lab</string>
+			<key>factoryFunction</key>
+			<string>AUv2LabFactory</string>
+			<key>manufacturer</key>
+			<string>Izmr</string>
+			<key>name</key>
+			<string>Izmar: AUv2Lab</string>
+			<key>resourceUsage</key>
+			<dict>
+				<key>network.client</key>
+				<true/>
+				<key>temporary-exception.files.all.read-write</key>
+				<true/>
+			</dict>
+			<key>subtype</key>
 			<string>IauL</string>
 			<key>type</key>
 			<string>aumu</string>
 			<key>version</key>
-			<integer>70033</integer>
+			<integer>70042</integer>
 		</dict>
 	</array>
 	<key>BuildMachineOSBuild</key>
