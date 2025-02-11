@@ -21,7 +21,7 @@ sleep 1
 
 xcodebuild -project $XCODE_PROJECT -scheme $XCODE_TARGET -destination 'platform=OS X,arch=arm64'
 
-open -a ../build-xcode/Debug/AUv3LabApp.app
+open -a "$(pwd)/../build-xcode/Debug/AUv3LabApp.app"
 
 sleep 1
 
@@ -35,7 +35,7 @@ sleep 1
 
 xcodebuild -project $XCODE_PROJECT -scheme $XCODE_TARGET -destination 'platform=OS X,arch=arm64'
 
-open -a ../build-xcode/Debug/AUv3LabApp.app
+open -a "$(pwd)/../build-xcode/Debug/AUv3LabApp.app"
 
 sleep 1
 
