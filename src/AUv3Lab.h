@@ -3,8 +3,8 @@
 
 @interface AUv3Lab : AUAudioUnit
 
-@property (nonatomic, readonly) AUAudioUnitBusArray *inputBusses;
-@property (nonatomic, readonly) AUAudioUnitBusArray *outputBusses;
-@property (nonatomic, readonly) AUParameterTree *parameterTree;
+@property (NS_NONATOMIC_IOSONLY, readonly) AUAudioUnitBusArray *inputBusses;
+@property (NS_NONATOMIC_IOSONLY, readonly) AUAudioUnitBusArray *outputBusses;
+@property (NS_NONATOMIC_IOSONLY, readonly) AUParameterTree *parameterTree;
 
 @end

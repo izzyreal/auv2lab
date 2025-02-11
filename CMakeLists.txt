@@ -10,11 +10,10 @@ file(GLOB_RECURSE SOURCES
     ${SRC_ROOT}/*.c*
     ${SRC_ROOT}/*.h*
     ${SRC_ROOT}/*.m*
-    ${SRC_ROOT}/*.exp
 )
 
 add_library(AUv3Lab MODULE ${SOURCES})
-add_executable(AUv3LabApp MACOSX_BUNDLE ${SOURCES})
+add_executable(AUv3LabApp MACOSX_BUNDLE ${SRC_ROOT}/main.m)
 
 target_sources(AUv3Lab PRIVATE ${CMAKE_SOURCE_DIR}/build-resources/AUv3/Info.plist)
 
@@ -30,7 +29,7 @@ set_target_properties(AUv3Lab PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/build-resources/AUv3/Info.plist
     XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME "YES"
     XCODE_ATTRIBUTE_APPLICATION_EXTENSION_API_ONLY "YES"
-    XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudio -framework AppKit"
+    XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudio -framework AppKit -framework CoreAudioKit"
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
     CXX_EXTENSIONS NO
@@ -39,6 +38,11 @@ set_target_properties(AUv3Lab PROPERTIES
 set_target_properties(AUv3LabApp PROPERTIES
     BUNDLE TRUE
     XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "nl.izmar.AUv3LabApp"
+    XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
+    XCODE_ATTRIBUTE_OTHER_CODE_SIGN_FLAGS "--deep"
+    XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudio -framework AppKit -framework CoreAudioKit"
+    CXX_STANDARD 17
+    XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME "NO"
     XCODE_PRODUCT_TYPE com.apple.product-type.application
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/build-resources/App/Info.plist
 )
@@ -70,8 +74,3 @@ configure_file(
     COPYONLY
 )
 
-add_custom_command(TARGET AUv3Lab POST_BUILD
-    COMMAND /bin/echo -n "BNDL????" > "${CMAKE_BINARY_DIR}/$<CONFIG>/AUv3Lab.component/Contents/PkgInfo"
-    COMMAND /bin/cp -R "${CMAKE_BINARY_DIR}/$<CONFIG>/AUv3Lab.component" "$ENV{HOME}/Library/Audio/Plug-Ins/Components/"
-    COMMENT "Deploying AUv3Lab.component to ~/Library/Audio/Plug-Ins/Components"
-)

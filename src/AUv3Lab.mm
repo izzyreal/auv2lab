@@ -1,6 +1,10 @@
 #import "AUv3Lab.h"
 
-@implementation AUv3Lab
+@implementation AUv3Lab {
+    AUAudioUnitBusArray *_inputBusses;
+    AUAudioUnitBusArray *_outputBusses;
+    AUParameterTree *_parameterTree;
+}
 
 - (instancetype)initWithComponentDescription:(AudioComponentDescription)desc options:(AudioComponentInstantiationOptions)options error:(NSError **)outError {
     self = [super initWithComponentDescription:desc options:options error:outError];
