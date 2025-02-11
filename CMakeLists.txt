@@ -42,6 +42,7 @@ set_target_properties(AUv3LabApp PROPERTIES
     XCODE_ATTRIBUTE_OTHER_CODE_SIGN_FLAGS "--deep"
     XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudio -framework AppKit -framework CoreAudioKit"
     CXX_STANDARD 17
+    XCODE_ATTRIBUTE_APPLICATION_EXTENSION_API_ONLY "YES"
     XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME "NO"
     XCODE_PRODUCT_TYPE com.apple.product-type.application
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/build-resources/App/Info.plist
@@ -49,6 +50,8 @@ set_target_properties(AUv3LabApp PROPERTIES
 
 target_include_directories(AUv3Lab PRIVATE ${SRC_ROOT})
 target_include_directories(AUv3LabApp PRIVATE ${SRC_ROOT})
+
+add_dependencies(AUv3LabApp AUv3Lab)
 
 target_compile_definitions(AUv3Lab PRIVATE
     AU_COMPILING_AUBASE=1
@@ -72,5 +75,13 @@ configure_file(
     ${CMAKE_SOURCE_DIR}/build-resources/App/Info.plist
     ${CMAKE_BINARY_DIR}/AUv3Lab.app/Contents/Info.plist
     COPYONLY
+)
+
+add_custom_command(TARGET AUv3LabApp POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+        ${CMAKE_BINARY_DIR}/$<CONFIG>/AUv3LabApp.app/Contents/PlugIns
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_BINARY_DIR}/$<CONFIG>/AUv3Lab.appex
+        ${CMAKE_BINARY_DIR}/$<CONFIG>/AUv3LabApp.app/Contents/PlugIns/AUv3Lab.appex
 )
 

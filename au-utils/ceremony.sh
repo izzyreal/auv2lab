@@ -21,6 +21,8 @@ sleep 1
 
 xcodebuild -project $XCODE_PROJECT -scheme $XCODE_TARGET -destination 'platform=OS X,arch=arm64'
 
+open -a ../build-xcode/Debug/AUv3LabApp.app
+
 sleep 1
 
 auval -v $AU_TYPE $AU_SUBTYPE $AU_MANUFACTURER
@@ -32,6 +34,8 @@ sleep 1
 sleep 1
 
 xcodebuild -project $XCODE_PROJECT -scheme $XCODE_TARGET -destination 'platform=OS X,arch=arm64'
+
+open -a ../build-xcode/Debug/AUv3LabApp.app
 
 sleep 1
 
