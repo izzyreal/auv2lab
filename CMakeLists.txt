@@ -29,7 +29,7 @@ set_target_properties(AUv3Lab PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/build-resources/Info.plist
     XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME "YES"
     XCODE_ATTRIBUTE_APPLICATION_EXTENSION_API_ONLY NO
-    CODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioUnit -framework CoreAudio -framework AppKit"
+    XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudio -framework AppKit"
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
     CXX_EXTENSIONS NO
