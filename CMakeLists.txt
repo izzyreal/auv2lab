@@ -44,7 +44,6 @@ set_target_properties(AUv3Lab PROPERTIES
     XCODE_PRODUCT_TYPE com.apple.product-type.app-extension
     XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/build-resources/AUv3/Info.plist
-    XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME "YES"
     XCODE_ATTRIBUTE_APPLICATION_EXTENSION_API_ONLY "YES"
     XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudio -framework AppKit -framework CoreAudioKit"
     XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/build-resources/extension.entitlements"
@@ -61,7 +60,6 @@ set_target_properties(AUv3LabApp PROPERTIES
     XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudio -framework AppKit -framework CoreAudioKit"
     CXX_STANDARD 17
     XCODE_ATTRIBUTE_APPLICATION_EXTENSION_API_ONLY "YES"
-    XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME "NO"
     XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"
     XCODE_PRODUCT_TYPE com.apple.product-type.application
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/build-resources/App/Info.plist
