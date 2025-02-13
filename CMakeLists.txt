@@ -63,6 +63,7 @@ set_target_properties(AUv3LabApp PROPERTIES
     BUNDLE TRUE
     XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "nl.izmar.AUv3LabApp"
     XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
+    XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${SRC_ROOT_APP}/app.entitlements"
     XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudio -framework AppKit -framework CoreAudioKit"
     CXX_STANDARD 17
     XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"

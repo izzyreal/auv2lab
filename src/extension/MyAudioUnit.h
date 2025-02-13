@@ -1,16 +1,9 @@
-//
-//  MyAudioUnit.h
-//  extension
-//
-//  Created by Izmar on 13/02/25.
-//  Copyright © 2025 Izmar. All rights reserved.
-//
-
 #import <AudioToolbox/AudioToolbox.h>
 
-// Define parameter addresses. (These needn't be static).
-#define myParam1 0
+extern const AudioUnitParameterID myParam1;
 
 @interface MyAudioUnit : AUAudioUnit
-
+- (void)setupAudioBuses;
+- (void)setupParameterTree;
+- (void)setupParameterCallbacks;
 @end
