@@ -19,7 +19,7 @@ source_group("src" FILES ${AUv3Lab_SOURCES})
 
 add_library(AUv3Lab MODULE ${AUv3Lab_SOURCES})
 
-set_source_files_properties(${SRC_ROOT_EXT}/Base.lproj/AudioUnitViewController.xib MACOSX_PACKAGE_LOCATION "Resources")
+set_source_files_properties(${SRC_ROOT_EXT}/Base.lproj/AudioUnitViewController.xib PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
 set_target_properties(AUv3Lab PROPERTIES
     XCODE_ATTRIBUTE_ORGANIZE_IN_GROUPS "NO"
@@ -37,7 +37,7 @@ source_group("src" FILES ${AUv3LabApp_SOURCES})
 
 add_executable(AUv3LabApp MACOSX_BUNDLE ${AUv3LabApp_SOURCES})
 
-set_source_files_properties(${SRC_ROOT_APP}/Base.lproj/MainMenu.xib MACOSX_PACKAGE_LOCATION "Resources")
+set_source_files_properties(${SRC_ROOT_APP}/Base.lproj/MainMenu.xib PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
 target_sources(AUv3Lab PRIVATE ${SRC_ROOT_EXT}/Info.plist)
 
