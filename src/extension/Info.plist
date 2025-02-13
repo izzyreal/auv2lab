@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>extension</string>
+	<string>AUv3Lab</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -30,17 +30,17 @@
 			<array>
 				<dict>
 					<key>description</key>
-					<string>extension</string>
+					<string>AUv3Lab</string>
 					<key>factoryFunction</key>
 					<string>AudioUnitViewController</string>
 					<key>manufacturer</key>
 					<string>Izmr</string>
 					<key>name</key>
-					<string>Izmr: extension</string>
+					<string>Izmr: AUv3Lab</string>
 					<key>sandboxSafe</key>
 					<true/>
 					<key>subtype</key>
-					<string>Av3t</string>
+					<string>Ia3I</string>
 					<key>tags</key>
 					<array>
 						<string>Synthesizer</string>
@@ -48,7 +48,7 @@
 					<key>type</key>
 					<string>aumu</string>
 					<key>version</key>
-					<integer>67072</integer>
+					<integer>67090</integer>
 				</dict>
 			</array>
 		</dict>

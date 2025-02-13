@@ -66,7 +66,6 @@ set_target_properties(AUv3LabApp PROPERTIES
     XCODE_ATTRIBUTE_OTHER_CODE_SIGN_FLAGS "--deep"
     XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudio -framework AppKit -framework CoreAudioKit"
     CXX_STANDARD 17
-    XCODE_ATTRIBUTE_APPLICATION_EXTENSION_API_ONLY "YES"
     XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"
     XCODE_PRODUCT_TYPE com.apple.product-type.application
     MACOSX_BUNDLE_INFO_PLIST ${SRC_ROOT_APP}/Info.plist
