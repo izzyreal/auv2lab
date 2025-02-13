@@ -6,14 +6,31 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13")
 
 set(SRC_ROOT "${CMAKE_SOURCE_DIR}/src")
 
-file(GLOB_RECURSE SOURCES
-    ${SRC_ROOT}/*.c*
-    ${SRC_ROOT}/*.h*
-    ${SRC_ROOT}/*.m*
+source_group("src" FILES
+    ${SRC_ROOT}/AUv3Lab.mm
+    ${SRC_ROOT}/Auv3LabView.mm
+    ${SRC_ROOT}/AUv3Lab.h
+    ${SRC_ROOT}/main.m
+    ${SRC_ROOT}/AppDelegate.m
+    ${SRC_ROOT}/AppDelegate.h
 )
 
-add_library(AUv3Lab MODULE ${SOURCES})
-add_executable(AUv3LabApp MACOSX_BUNDLE ${SRC_ROOT}/main.m)
+add_library(AUv3Lab MODULE
+    ${SRC_ROOT}/AUv3Lab.mm
+    ${SRC_ROOT}/Auv3LabView.mm
+    ${SRC_ROOT}/AUv3Lab.h
+)
+
+set_target_properties(AUv3Lab PROPERTIES
+    XCODE_ATTRIBUTE_ORGANIZE_IN_GROUPS "NO"
+    XCODE_FILE_GROUP "src"
+)
+
+add_executable(AUv3LabApp MACOSX_BUNDLE
+    ${SRC_ROOT}/main.m
+    ${SRC_ROOT}/AppDelegate.m
+    ${SRC_ROOT}/AppDelegate.h
+)
 
 target_sources(AUv3Lab PRIVATE ${CMAKE_SOURCE_DIR}/build-resources/AUv3/Info.plist)
 
