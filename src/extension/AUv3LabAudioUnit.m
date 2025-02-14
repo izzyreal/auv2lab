@@ -1,152 +1,126 @@
-//
-//  AUv3LabAudioUnit.m
-//  AUv3Lab
-//
-//  Created by Izmar on 13/02/2025.
-//
-
 #import "AUv3LabAudioUnit.h"
 
 #import <AVFoundation/AVFoundation.h>
 
-// Define parameter addresses.
 const AudioUnitParameterID myParam1 = 0;
 
-@interface AUv3LabAudioUnit ()
+@interface AUv3LabAudioUnit () {
+    AUAudioFrameCount _maximumFramesToRender;
+}
 
 @property (nonatomic, readwrite) AUParameterTree *parameterTree;
 @property AUAudioUnitBusArray *inputBusArray;
 @property AUAudioUnitBusArray *outputBusArray;
 @end
 
-
 @implementation AUv3LabAudioUnit
 @synthesize parameterTree = _parameterTree;
 
 - (instancetype)initWithComponentDescription:(AudioComponentDescription)componentDescription options:(AudioComponentInstantiationOptions)options error:(NSError **)outError {
+    _maximumFramesToRender = 512;
     self = [super initWithComponentDescription:componentDescription options:options error:outError];
     
     if (self == nil) { return nil; }
 
-	_kernelAdapter = [[AUv3LabDSPKernelAdapter alloc] init];
-
-	[self setupAudioBuses];
-	[self setupParameterTree];
-	[self setupParameterCallbacks];
+  [self setupAudioBuses];
+  [self setupParameterTree];
+  [self setupParameterCallbacks];
     return self;
 }
 
 #pragma mark - AUAudioUnit Setup
 
 - (void)setupAudioBuses {
-	// Create the input and output bus arrays.
-	_inputBusArray  = [[AUAudioUnitBusArray alloc] initWithAudioUnit:self
-															 busType:AUAudioUnitBusTypeInput
-															  busses: @[_kernelAdapter.inputBus]];
-	_outputBusArray = [[AUAudioUnitBusArray alloc] initWithAudioUnit:self
-															 busType:AUAudioUnitBusTypeOutput
-															  busses: @[_kernelAdapter.outputBus]];
+    AVAudioFormat *format = [[AVAudioFormat alloc] initStandardFormatWithSampleRate:44100 channels:2];
+    
+    _inputBus = [[AUAudioUnitBus alloc] initWithFormat:format error:nil];
+    _inputBus.maximumChannelCount = 8;
+    _outputBus = [[AUAudioUnitBus alloc] initWithFormat:format error:nil];
+    _outputBus.maximumChannelCount = 8;
+    
+  _inputBusArray  = [[AUAudioUnitBusArray alloc] initWithAudioUnit:self
+                               busType:AUAudioUnitBusTypeInput
+                                busses: @[_inputBus]];
+  _outputBusArray = [[AUAudioUnitBusArray alloc] initWithAudioUnit:self
+                               busType:AUAudioUnitBusTypeOutput
+                                busses: @[_outputBus]];
 }
 
 - (void)setupParameterTree {
     // Create parameter objects.
     AUParameter *param1 = [AUParameterTree createParameterWithIdentifier:@"param1"
-																	name:@"Parameter 1"
-																 address:myParam1
-																	 min:0
-																	 max:100
-																	unit:kAudioUnitParameterUnit_Percent
-																unitName:nil
-																   flags:kAudioUnitParameterFlag_IsWritable | kAudioUnitParameterFlag_IsReadable
-															valueStrings:nil
-													 dependentParameters:nil];
+                                  name:@"Parameter 1"
+                                 address:myParam1
+                                   min:0
+                                   max:100
+                                  unit:kAudioUnitParameterUnit_Percent
+                                unitName:nil
+                                   flags:kAudioUnitParameterFlag_IsWritable | kAudioUnitParameterFlag_IsReadable
+                              valueStrings:nil
+                           dependentParameters:nil];
 
-    // Initialize the parameter values.
     param1.value = 0.5;
 
-    // Create the parameter tree.
     _parameterTree = [AUParameterTree createTreeWithChildren:@[ param1 ]];
 }
 
 - (void)setupParameterCallbacks {
-	// Make a local pointer to the kernel to avoid capturing self.
-	__block AUv3LabDSPKernelAdapter * kernelAdapter = _kernelAdapter;
+  _parameterTree.implementorStringFromValueCallback = ^(AUParameter *param, const AUValue *__nullable valuePtr) {
+    AUValue value = valuePtr == nil ? param.value : *valuePtr;
 
-	// implementorValueObserver is called when a parameter changes value.
-	_parameterTree.implementorValueObserver = ^(AUParameter *param, AUValue value) {
-		[kernelAdapter setParameter:param value:value];
-	};
-
-	// implementorValueProvider is called when the value needs to be refreshed.
-	_parameterTree.implementorValueProvider = ^(AUParameter *param) {
-		return [kernelAdapter valueForParameter:param];
-	};
-
-	// A function to provide string representations of parameter values.
-	_parameterTree.implementorStringFromValueCallback = ^(AUParameter *param, const AUValue *__nullable valuePtr) {
-		AUValue value = valuePtr == nil ? param.value : *valuePtr;
-
-		return [NSString stringWithFormat:@"%.f", value];
-	};
+    return [NSString stringWithFormat:@"%.f", value];
+  };
 }
 
 #pragma mark - AUAudioUnit Overrides
 
 - (AUAudioFrameCount)maximumFramesToRender {
-	return [_kernelAdapter maximumFramesToRender];
+  return _maximumFramesToRender;
 }
 
 - (void)setMaximumFramesToRender:(AUAudioFrameCount)maximumFramesToRender {
-	[_kernelAdapter setMaximumFramesToRender:maximumFramesToRender];
+    _maximumFramesToRender = maximumFramesToRender;
 }
 
-// If an audio unit has input, an audio unit's audio input connection points.
-// Subclassers must override this property getter and should return the same object every time.
-// See sample code.
 - (AUAudioUnitBusArray *)inputBusses {
-	return _inputBusArray;
+  return _inputBusArray;
 }
 
-// An audio unit's audio output connection points.
-// Subclassers must override this property getter and should return the same object every time.
-// See sample code.
 - (AUAudioUnitBusArray *)outputBusses {
-	return _outputBusArray;
+  return _outputBusArray;
 }
 
-// Allocate resources required to render.
-// Subclassers should call the superclass implementation.
 - (BOOL)allocateRenderResourcesAndReturnError:(NSError **)outError {
-	if (_kernelAdapter.outputBus.format.channelCount != _kernelAdapter.inputBus.format.channelCount) {
-		if (outError) {
-			*outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:kAudioUnitErr_FailedInitialization userInfo:nil];
-		}
-		// Notify superclass that initialization was not successful
-		self.renderResourcesAllocated = NO;
+  if (_outputBus.format.channelCount != _inputBus.format.channelCount) {
+    if (outError) {
+      *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:kAudioUnitErr_FailedInitialization userInfo:nil];
+    }
+    self.renderResourcesAllocated = NO;
 
-		return NO;
-	}
+    return NO;
+  }
 
-	[super allocateRenderResourcesAndReturnError:outError];
-	[_kernelAdapter allocateRenderResources];
-	return YES;
+  [super allocateRenderResourcesAndReturnError:outError];
+    self.renderResourcesAllocated = YES;
+  return YES;
 }
 
-// Deallocate resources allocated in allocateRenderResourcesAndReturnError:
-// Subclassers should call the superclass implementation.
 - (void)deallocateRenderResources {
-	[_kernelAdapter deallocateRenderResources];
-
-    // Deallocate your resources.
     [super deallocateRenderResources];
 }
 
 #pragma mark - AUAudioUnit (AUAudioUnitImplementation)
 
-// Block which subclassers must provide to implement rendering.
 - (AUInternalRenderBlock)internalRenderBlock {
-	return _kernelAdapter.internalRenderBlock;
+    return ^AUAudioUnitStatus(AudioUnitRenderActionFlags                 *actionFlags,
+                              const AudioTimeStamp                       *timestamp,
+                              AVAudioFrameCount                           frameCount,
+                              NSInteger                                   outputBusNumber,
+                              AudioBufferList                            *outputData,
+                              const AURenderEvent                        *realtimeEventListHead,
+                              AURenderPullInputBlock __unsafe_unretained pullInputBlock) {
+        return noErr;
+    };
 }
-
 @end
 

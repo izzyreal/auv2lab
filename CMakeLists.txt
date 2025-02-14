@@ -13,12 +13,6 @@ set(AUv3Lab_SOURCES
     ${SRC_ROOT_EXT}/Base.lproj/AudioUnitViewController.xib
     ${SRC_ROOT_EXT}/AUv3LabAudioUnit.h
     ${SRC_ROOT_EXT}/AUv3LabAudioUnit.m
-    ${SRC_ROOT_EXT}/AUv3LabDSPKernel.hpp
-    ${SRC_ROOT_EXT}/AUv3LabDSPKernel.mm
-    ${SRC_ROOT_EXT}/Helpers/AUv3LabDSPKernelAdapter.h
-    ${SRC_ROOT_EXT}/Helpers/BufferedAudioBus.hpp
-    ${SRC_ROOT_EXT}/Helpers/DSPKernel.hpp
-    ${SRC_ROOT_EXT}/Helpers/DSPKernel.mm
 )
 
 source_group("src" FILES ${AUv3Lab_SOURCES})
