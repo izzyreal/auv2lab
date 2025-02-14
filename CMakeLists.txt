@@ -58,7 +58,7 @@ set_target_properties(AUv3Lab PROPERTIES
     XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
     MACOSX_BUNDLE_INFO_PLIST ${SRC_ROOT_EXT}/Info.plist
     XCODE_ATTRIBUTE_APPLICATION_EXTENSION_API_ONLY "YES"
-    XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudio -framework AppKit -framework CoreAudioKit"
+    XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit"
     XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${SRC_ROOT_EXT}/extension.entitlements"
     CXX_STANDARD 17
     XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"
@@ -71,7 +71,7 @@ set_target_properties(AUv3LabApp PROPERTIES
     XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "nl.izmar.AUv3Lab"
     XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
     XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${SRC_ROOT_APP}/app.entitlements"
-    XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudio -framework AppKit -framework CoreAudioKit"
+    XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AppKit"
     CXX_STANDARD 17
     XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"
     XCODE_PRODUCT_TYPE com.apple.product-type.application
@@ -82,18 +82,6 @@ target_include_directories(AUv3Lab PRIVATE ${SRC_ROOT})
 target_include_directories(AUv3LabApp PRIVATE ${SRC_ROOT})
 
 add_dependencies(AUv3LabApp AUv3Lab)
-
-target_compile_definitions(AUv3Lab PRIVATE
-    AU_COMPILING_AUBASE=1
-    TARGET_API_MAC_CARBON=1
-    AUDIOUNIT_SDK=1
-)
-
-target_compile_definitions(AUv3LabApp PRIVATE
-    AU_COMPILING_AUBASE=1
-    TARGET_API_MAC_CARBON=1
-    AUDIOUNIT_SDK=1
-)
 
 add_custom_command(TARGET AUv3LabApp POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory
