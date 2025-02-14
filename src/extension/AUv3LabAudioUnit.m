@@ -2,19 +2,15 @@
 
 #import <AVFoundation/AVFoundation.h>
 
-const AudioUnitParameterID myParam1 = 0;
-
 @interface AUv3LabAudioUnit () {
     AUAudioFrameCount _maximumFramesToRender;
 }
 
-@property (nonatomic, readwrite) AUParameterTree *parameterTree;
 @property AUAudioUnitBusArray *inputBusArray;
 @property AUAudioUnitBusArray *outputBusArray;
 @end
 
 @implementation AUv3LabAudioUnit
-@synthesize parameterTree = _parameterTree;
 
 - (instancetype)initWithComponentDescription:(AudioComponentDescription)componentDescription options:(AudioComponentInstantiationOptions)options error:(NSError **)outError {
     _maximumFramesToRender = 512;
@@ -22,57 +18,54 @@ const AudioUnitParameterID myParam1 = 0;
     
     if (self == nil) { return nil; }
 
-  [self setupAudioBuses];
-  [self setupParameterTree];
-  [self setupParameterCallbacks];
+    [self setupAudioBuses];
     return self;
 }
 
 #pragma mark - AUAudioUnit Setup
 
 - (void)setupAudioBuses {
-    AVAudioFormat *format = [[AVAudioFormat alloc] initStandardFormatWithSampleRate:44100 channels:2];
-    
-    _inputBus = [[AUAudioUnitBus alloc] initWithFormat:format error:nil];
-    _inputBus.maximumChannelCount = 8;
-    _outputBus = [[AUAudioUnitBus alloc] initWithFormat:format error:nil];
-    _outputBus.maximumChannelCount = 8;
-    
-  _inputBusArray  = [[AUAudioUnitBusArray alloc] initWithAudioUnit:self
-                               busType:AUAudioUnitBusTypeInput
-                                busses: @[_inputBus]];
-  _outputBusArray = [[AUAudioUnitBusArray alloc] initWithAudioUnit:self
-                               busType:AUAudioUnitBusTypeOutput
-                                busses: @[_outputBus]];
-}
+    AVAudioFormat *stereoFormat = [[AVAudioFormat alloc] initStandardFormatWithSampleRate:44100 channels:2];
+    AVAudioFormat *monoFormat = [[AVAudioFormat alloc] initStandardFormatWithSampleRate:44100 channels:1];
 
-- (void)setupParameterTree {
-    // Create parameter objects.
-    AUParameter *param1 = [AUParameterTree createParameterWithIdentifier:@"param1"
-                                  name:@"Parameter 1"
-                                 address:myParam1
-                                   min:0
-                                   max:100
-                                  unit:kAudioUnitParameterUnit_Percent
-                                unitName:nil
-                                   flags:kAudioUnitParameterFlag_IsWritable | kAudioUnitParameterFlag_IsReadable
-                              valueStrings:nil
-                           dependentParameters:nil];
+    NSMutableArray *outputBuses = [NSMutableArray array];
 
-    param1.value = 0.5;
+    for (int i = 0; i < 5; i++) {
+        AUAudioUnitBus *stereoBus = [[AUAudioUnitBus alloc] initWithFormat:stereoFormat error:nil];
+        stereoBus.maximumChannelCount = 2;
+        [outputBuses addObject:stereoBus];
+    }
 
-    _parameterTree = [AUParameterTree createTreeWithChildren:@[ param1 ]];
-}
+    for (int i = 0; i < 8; i++) {
+        AUAudioUnitBus *monoBus = [[AUAudioUnitBus alloc] initWithFormat:monoFormat error:nil];
+        monoBus.maximumChannelCount = 1;
+        [outputBuses addObject:monoBus];
+    }
 
-- (void)setupParameterCallbacks {
-  _parameterTree.implementorStringFromValueCallback = ^(AUParameter *param, const AUValue *__nullable valuePtr) {
-    AUValue value = valuePtr == nil ? param.value : *valuePtr;
+    _inputBusArray = [[AUAudioUnitBusArray alloc] initWithAudioUnit:self
+                                                            busType:AUAudioUnitBusTypeInput
+                                                             busses:@[[[AUAudioUnitBus alloc] initWithFormat:stereoFormat error:nil]]];
 
-    return [NSString stringWithFormat:@"%.f", value];
-  };
+    _outputBusArray = [[AUAudioUnitBusArray alloc] initWithAudioUnit:self
+                                                             busType:AUAudioUnitBusTypeOutput
+                                                              busses:outputBuses];
 }
 
 #pragma mark - AUAudioUnit Overrides
+
+- (BOOL)shouldChangeToFormat:(AVAudioFormat *)format forBus:(AUAudioUnitBus *)bus {
+    if (bus.busType == AUAudioUnitBusTypeInput) {
+        return (bus.index == 0 && format.channelCount == 2);
+    }
+
+    if (bus.busType == AUAudioUnitBusTypeOutput) {
+        NSInteger busIndex = bus.index;
+        return (busIndex >= 0 && busIndex <= 4 && format.channelCount == 2) ||
+               (busIndex >= 5 && busIndex <= 12 && format.channelCount == 1);
+    }
+
+    return NO;
+}
 
 - (AUAudioFrameCount)maximumFramesToRender {
   return _maximumFramesToRender;
@@ -88,25 +81,6 @@ const AudioUnitParameterID myParam1 = 0;
 
 - (AUAudioUnitBusArray *)outputBusses {
   return _outputBusArray;
-}
-
-- (BOOL)allocateRenderResourcesAndReturnError:(NSError **)outError {
-  if (_outputBus.format.channelCount != _inputBus.format.channelCount) {
-    if (outError) {
-      *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:kAudioUnitErr_FailedInitialization userInfo:nil];
-    }
-    self.renderResourcesAllocated = NO;
-
-    return NO;
-  }
-
-  [super allocateRenderResourcesAndReturnError:outError];
-    self.renderResourcesAllocated = YES;
-  return YES;
-}
-
-- (void)deallocateRenderResources {
-    [super deallocateRenderResources];
 }
 
 #pragma mark - AUAudioUnit (AUAudioUnitImplementation)
