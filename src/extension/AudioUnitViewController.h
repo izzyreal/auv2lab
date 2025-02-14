@@ -1,9 +1,8 @@
 //
 //  AudioUnitViewController.h
-//  extension
+//  AUv3Lab
 //
-//  Created by Izmar on 13/02/25.
-//  Copyright © 2025 Izmar. All rights reserved.
+//  Created by Izmar on 13/02/2025.
 //
 
 #import <CoreAudioKit/CoreAudioKit.h>

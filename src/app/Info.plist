@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>AUv3LabApp</string>
 	<key>CFBundleIdentifier</key>
-	<string>nl.izmar.AUv3LabApp</string>
+	<string>nl.izmar.AUv3Lab</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

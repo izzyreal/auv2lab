@@ -1,16 +1,15 @@
 //
 //  AppDelegate.m
-//  auv3app
+//  AUv3LabApp
 //
-//  Created by Izmar on 13/02/25.
-//  Copyright © 2025 Izmar. All rights reserved.
+//  Created by Izmar on 13/02/2025.
 //
 
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
 
-@property (weak) IBOutlet NSWindow *window;
+@property (strong) IBOutlet NSWindow *window;
 @end
 
 @implementation AppDelegate
@@ -22,6 +21,11 @@
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+}
+
+
+- (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
+    return YES;
 }
 
 

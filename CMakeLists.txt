@@ -11,8 +11,14 @@ set(AUv3Lab_SOURCES
     ${SRC_ROOT_EXT}/AudioUnitViewController.h
     ${SRC_ROOT_EXT}/AudioUnitViewController.m
     ${SRC_ROOT_EXT}/Base.lproj/AudioUnitViewController.xib
-    ${SRC_ROOT_EXT}/MyAudioUnit.h
-    ${SRC_ROOT_EXT}/MyAudioUnit.m
+    ${SRC_ROOT_EXT}/AUv3LabAudioUnit.h
+    ${SRC_ROOT_EXT}/AUv3LabAudioUnit.m
+    ${SRC_ROOT_EXT}/AUv3LabDSPKernel.hpp
+    ${SRC_ROOT_EXT}/AUv3LabDSPKernel.mm
+    ${SRC_ROOT_EXT}/Helpers/AUv3LabDSPKernelAdapter.h
+    ${SRC_ROOT_EXT}/Helpers/BufferedAudioBus.hpp
+    ${SRC_ROOT_EXT}/Helpers/DSPKernel.hpp
+    ${SRC_ROOT_EXT}/Helpers/DSPKernel.mm
 )
 
 source_group("src" FILES ${AUv3Lab_SOURCES})
@@ -47,7 +53,7 @@ set_target_properties(AUv3Lab PROPERTIES
     BUNDLE TRUE
     BUNDLE_EXTENSION "appex"
     XCODE_ATTRIBUTE_WRAPPER_EXTENSION "appex"
-    XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "nl.izmar.AUv3Lab"
+    XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "nl.izmar.AUv3Lab.extension"
     XCODE_PRODUCT_TYPE com.apple.product-type.app-extension
     XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
     MACOSX_BUNDLE_INFO_PLIST ${SRC_ROOT_EXT}/Info.plist
@@ -55,13 +61,14 @@ set_target_properties(AUv3Lab PROPERTIES
     XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudio -framework AppKit -framework CoreAudioKit"
     XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${SRC_ROOT_EXT}/extension.entitlements"
     CXX_STANDARD 17
+    XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"
     CXX_STANDARD_REQUIRED YES
     CXX_EXTENSIONS NO
 )
 
 set_target_properties(AUv3LabApp PROPERTIES
     BUNDLE TRUE
-    XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "nl.izmar.AUv3LabApp"
+    XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "nl.izmar.AUv3Lab"
     XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
     XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${SRC_ROOT_APP}/app.entitlements"
     XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudio -framework AppKit -framework CoreAudioKit"
