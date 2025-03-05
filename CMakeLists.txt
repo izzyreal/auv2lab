@@ -10,7 +10,6 @@ set(SRC_ROOT_EXT "${CMAKE_SOURCE_DIR}/src/extension")
 set(AUv3Lab_SOURCES
     ${SRC_ROOT_EXT}/AudioUnitViewController.h
     ${SRC_ROOT_EXT}/AudioUnitViewController.m
-    ${SRC_ROOT_EXT}/Base.lproj/AudioUnitViewController.xib
     ${SRC_ROOT_EXT}/AUv3LabAudioUnit.h
     ${SRC_ROOT_EXT}/AUv3LabAudioUnit.m
 )
@@ -52,7 +51,7 @@ set_target_properties(AUv3Lab PROPERTIES
     XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
     MACOSX_BUNDLE_INFO_PLIST ${SRC_ROOT_EXT}/Info.plist
     XCODE_ATTRIBUTE_APPLICATION_EXTENSION_API_ONLY "YES"
-    XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit"
+    XCODE_ATTRIBUTE_OTHER_LDFLAGS "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit -framework AppKit"
     XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${SRC_ROOT_EXT}/extension.entitlements"
     CXX_STANDARD 17
     XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"
