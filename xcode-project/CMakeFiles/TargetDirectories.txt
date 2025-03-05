@@ -1,0 +1,4 @@
+/Users/izmar/git/auv3lab/xcode-project/CMakeFiles/AUv3Lab.dir
+/Users/izmar/git/auv3lab/xcode-project/CMakeFiles/AUv3LabApp.dir
+/Users/izmar/git/auv3lab/xcode-project/CMakeFiles/ALL_BUILD.dir
+/Users/izmar/git/auv3lab/xcode-project/CMakeFiles/ZERO_CHECK.dir

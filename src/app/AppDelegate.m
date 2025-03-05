@@ -1,10 +1,3 @@
-//
-//  AppDelegate.m
-//  AUv3LabApp
-//
-//  Created by Izmar on 13/02/2025.
-//
-
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
@@ -27,6 +20,5 @@
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app {
     return YES;
 }
-
 
 @end
